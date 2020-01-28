@@ -1,0 +1,35 @@
+th {
+    width:75px !important;
+}
+
+.table-sticky>thead>tr>th,
+.table-sticky>thead>tr>td {
+	background: #009688;
+	color: #fff;
+	top: 0px;
+	position: sticky;
+}
+.table-height {
+	height: 320px;
+	display: block;
+	overflow: scroll;
+	width: 100%;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+.table-bordered>thead>tr>th,
+.table-bordered>tbody>tr>th,
+.table-bordered>thead>tr>td,
+.table-bordered>tbody>tr>td {
+	border: 1px solid #ddd;
+}
+
+.bg_gradient{
+    background: #000046;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #1CB5E0, #000046);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #1CB5E0, #000046);
+}

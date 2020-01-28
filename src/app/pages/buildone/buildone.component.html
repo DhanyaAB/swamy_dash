@@ -1,0 +1,183 @@
+<div class="row">
+  <div class="col-md-6 col-lg-6 mb-4">
+    <div class="card border-0 rounded-50">
+      <div class="card-body">
+        <div class="card-innerBody d-flex align-items-center">
+          <div class="card-icon text-light ">
+            <i class="fas fa-id-card-alt " aria-hidden="true" style="color: #FF3333;"></i>
+          </div>
+          <div class="ml-auto">
+            <p class="card-label text-right text-muted">Image ID</p>
+            <h6 class="card-text text-right "> {{img_id}}</h6>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 col-lg-3 mb-4">
+    <div class="card border-0 rounded-50">
+      <div class="card-body">
+        <div class="card-innerBody d-flex align-items-center">
+          <div class="card-icon text-light ">
+            <i class="fab fa-chrome " aria-hidden="true" style="color: var(--pink);"></i>
+          </div>
+          <div class="ml-auto">
+            <p class="card-label text-right text-muted">Job Link</p>
+            <h6 class="card-text text-right "> 
+              <a [attr.href]="job_url" target="_blank"><i class="fas fa-eye"></i>  View URL</a></h6>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 col-lg-3 mb-4">
+    <div class="card border-0 rounded-50">
+      <div class="card-body">
+
+        <div class="card-innerBody d-flex align-items-center">
+          <div class="card-icon text-light ">
+            <i class="fas fa-stopwatch " aria-hidden="true" style="color: #669999;"></i>
+          </div>
+          <div class="ml-auto">
+            <p class="card-label text-right text-muted">Execution Time</p>
+            <h4 class="card-text text-right "> {{suite_details.executiontime}}&nbsp;Sec</h4>
+            <!-- -->
+          </div>
+        </div>  
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6 col-lg-3 mb-4">
+    <div class="card border-0 rounded-50">
+      <div class="card-body">
+        <div class="card-innerBody d-flex align-items-center">
+          <div class="card-icon text-light ">
+            <i class="fas fa-cogs " aria-hidden="true" style="color: #6F3662;"></i>
+          </div>
+          <div class="ml-auto">
+            <p class="card-label text-right text-muted">Test Suite</p>
+            <h6 class="card-text text-right ">{{suite_details.name}}</h6>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 col-lg-3 mb-4" (click)='filter_table("pass")' style="cursor: pointer;">
+    <div class="card border-0 rounded-50">
+      <div class="card-body">
+        <div class="card-innerBody d-flex align-items-center">
+          <div class="card-icon text-light faa-parent animated-hover">
+            <i class="animated-hover fas fa-thumbs-up" aria-hidden="true" style="color: green;"></i>
+          </div>
+          <div class="ml-auto" >
+            <p class="card-label text-right text-muted">Pass</p>
+            <h4 class="card-text text-right  " >{{suite_details.pass}}</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 col-lg-3 mb-4" (click)='filter_table("failures")' style="cursor: pointer;">
+    <div class="card border-0 rounded-50">
+      <div class="card-body">
+        <div class="card-innerBody d-flex align-items-center">
+          <div class="card-icon text-light">
+            <i class="far fa-thumbs-down" aria-hidden="true" style="color: red;"></i>
+          </div>
+          <div class="ml-auto" >
+            <p class="card-label text-right text-muted">Fail</p>
+            <h4 class="card-text text-right ">{{suite_details.failures}}</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 col-lg-3 mb-4" (click)='filter_table("total")' style="cursor: pointer;">
+    <div class="card border-0 rounded-50">
+      <div class="card-body">
+        <div class="card-innerBody d-flex align-items-center">
+          <div class="card-icon text-light">
+            <i class="fas fa-stream" aria-hidden="true" style="color: #9F6164;"></i>
+          </div>
+          <div class="ml-auto">
+            <p class="card-label text-right text-muted">Total</p>
+            <h4 class="card-text text-right ">{{ suite_details.total}}</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12 col-sm-3">
+    <div class="card">
+      <div class="card-body">
+        <div class="table-responsive-md">
+          <table class="table table-hover table-bordered table-striped ">
+            <thead class="bg_gradient">
+              <tr>
+                <th>Suit Name</th>
+                <th>Test Name</th>
+                <th>Execution Time</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <ng-container *ngFor="let value of tableData;" >
+              <tbody>
+                <tr>
+                  <td>{{suite_details.name}}</td>
+                  <td>{{value.testcase_name}}</td>
+                  <td>{{value.time }}</td>
+                  <td style="width: 100px;">
+                    <ng-container *ngIf="value.status == 'fail'">
+                      <a href="javascript:void(0)" style="color: red; font-weight: 600;" data-toggle="modal" (click)="getError(value.message)"
+                        data-target="#myModal1"><i class="fas fa-exclamation-circle"></i> FAIL</a>
+                    </ng-container>
+                    <ng-container *ngIf="value.status == 'pass'">
+                      <span style="color: green; font-weight: 600;"><i class="far fa-check-circle"></i> PASS</span>
+                    </ng-container>
+                  </td>
+                </tr>
+              </tbody>
+            </ng-container>
+
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="modal" id="myModal1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Status Information</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+      <h6>{{message}}</h6>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
